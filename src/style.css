@@ -2,21 +2,56 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: rgb(34, 34, 34);
+}
+button {
+  cursor: pointer;
 }
 body {
   cursor: url(../img/flyswatter.png) 30 30, auto;
   font-family: "Gloria Hallelujah", cursive;
+  color: rgb(34, 34, 34);
 }
-button {
-  outline: none;
-  border: none;
+.game {
+  width: 800px;
+  height: 500px;
+  min-width: 640px;
+  margin: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: url(../img/background.png) no-repeat;
+  background-size: cover;
 }
-button:active {
-  box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+.game__header {
+  width: 100%;
+  height: 50%;
+  padding-top: 28px;
+  display: flex;
+  justify-content: center;
 }
-.sound,
-.muted {
+.game__field {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+}
+.game__start-button,
+.game__restart-button,
+.game__resume-button,
+.game__message,
+.game__tutorial,
+.game__time,
+.game__count {
   position: absolute;
+}
+
+/* game header */
+
+.game__sound,
+.game__muted {
+  position: absolute;
+  top: 0;
   right: 0;
   width: 60px;
   height: 60px;
@@ -26,41 +61,57 @@ button:active {
   background-color: transparent;
   z-index: 100;
 }
-.sound {
+.game__sound {
   display: block;
 }
-.muted {
+.game__muted {
   display: none;
 }
-
-section {
-  width: 85%;
-  min-width: 640px;
-  margin: auto;
-  position: relative;
-  display: flex;
-  justify-content: center;
+.game__time {
+  width: 180px;
+  font-size: 26px;
+  font-weight: 600;
+  border: 5px solid rosybrown;
+  border-radius: 15px;
+  background: rgb(255, 255, 255);
+  padding: 0px 12px;
 }
-
-/* .clear {
+.game__count {
+  font-size: 50px;
+  font-weight: bold;
+  margin-top: 45px;
+}
+.game__pause {
   display: none;
-} */
-.bg {
-  display: block;
-  width: 100%;
-  margin: auto;
+  width: 50px;
+  height: 50px;
+  margin-top: 140px;
+  font-size: 38px;
+  border: none;
+  outline: none;
+  background-color: transparent;
 }
-.start__button,
-.restart__button,
-.clear__message,
-.tutorial,
-.time,
-.count {
-  position: absolute;
-}
-.tutorial {
+
+/* game field */
+.game__tutorial {
   font-size: 1.8rem;
-  top: 53%;
+}
+#mosquito {
+  position: relative;
+  width: 50px;
+  animation: popping 800ms ease-in infinite;
+  top: 0;
+}
+@keyframes popping {
+  0% {
+    top: 0;
+  }
+  50% {
+    top: -15px;
+  }
+  100% {
+    top: 0;
+  }
 }
 @media screen and (max-width: 780px) {
   .tutorial {
@@ -80,49 +131,52 @@ section {
     left: 3%;
   }
 }
-
-.start__button {
-  z-index: 11;
-  display: block;
+.game__button {
+  padding: 20px;
   top: 68%;
-  width: 100px;
-  height: 70px;
+  font-size: 26px;
+  border-radius: 15px;
+  outline: none;
+  border: 5px solid palevioletred;
+  transition: transform 300ms ease-in;
 }
-.restart__button {
+.game__button:hover {
+  transform: scale(1.1);
+}
+.game__button:active {
+  box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+}
+
+.game__start-button {
+  z-index: 12;
+  display: block;
+}
+.game__restart-button {
   z-index: 12;
   display: none;
-  top: 68%;
-  width: 100px;
-  height: 70px;
 }
-.clear__message {
+.game__resume-button {
+  z-index: 12;
+  display: none;
+}
+.game__message {
   top: 50%;
   color: rgb(43, 64, 226);
   font-size: 2rem;
   font-weight: bold;
 }
-
-.time {
-  top: 8%;
-}
-.count {
-  top: 20%;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-.target__container {
-  position: absolute;
+.game__target-container {
   width: 100%;
   height: 100%;
 }
 .watermelon {
   position: absolute;
-  width: 10%;
+  width: 12%;
   z-index: 9;
 }
 .mosquito {
   position: absolute;
-  width: 4%;
+  width: 6%;
   z-index: 10;
 }
 .effect {

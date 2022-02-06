@@ -9,25 +9,32 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="src/style.css" />
+    <script src="src/main.js" defer></script>
     <title>모기를 잡아라!</title>
   </head>
   <body>
-    <section>
-      <button class="sound">🔊</button>
-      <button class="muted">🔇</button>
-      <img class="bg" src="./img/background.png" alt="background" />
-      <div class="tutorial">
-        <span>Hit </span>sneaky mosquitoes
-        <img src="./img/mosquito.png" alt="mosquito" width="50px" />
-        <span>aside watermelons!</span>
+    <section class="game">
+      <div class="game__header">
+        <button class="game__sound">🔊</button>
+        <button class="game__muted">🔇</button>
+        <div class="game__time">
+          <span>Time </span><span class="game__timer">00:08</span>
+        </div>
+        <div class="game__count"></div>
+        <button class="game__pause">⏸</button>
       </div>
-      <button class="start__button">Start</button>
-      <button class="restart__button">Restart</button>
-      <div class="time">Time 00:08</div>
-      <div class="count"></div>
-      <div class="target__container"></div>
-      <div class="clear__message"></div>
+      <div class="game__field">
+        <div class="game__tutorial">
+          <span>Hit </span>sneaky mosquitoes
+          <img id="mosquito" src="./img/mosquito.png" alt="mosquito" />
+          <span>aside watermelons!</span>
+        </div>
+        <button class="game__button game__start-button">Start</button>
+        <button class="game__button game__restart-button">Retry</button>
+        <button class="game__button game__resume-button">Resume</button>
+        <div class="game__target-container"></div>
+        <div class="game__message"></div>
+      </div>
     </section>
-    <script src="src/main.js"></script>
   </body>
 </html>
