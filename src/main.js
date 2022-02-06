@@ -60,15 +60,15 @@ startButton.addEventListener("click", (event) => {
   count.innerText = countNumber;
   targetContainer.style.opacity = "100%";
   putTargets();
-  onClickTarget(targetContainer);
-  // 시간이 줄어들게
-  // settimeout 1초마다 1씩 줄어들게
+  // 1초마다 1씩 줄어들게
   countTime = "6";
-  startCountTimeout();
+  handleCountTimeout();
 });
 
 let countTimeout;
-function startCountTimeout() {
+
+function handleCountTimeout() {
+  const originalTargetNumber = countNumber;
   countTimeout = setInterval(() => {
     countTime--;
     time.innerText = `00:${countTime}`;
@@ -84,13 +84,13 @@ function startCountTimeout() {
       for (let i = 0; i < target.length; i++) {
         targetContainer.removeChild(target[i]);
       }
+      countNumber = originalTargetNumber;
     }
   }, 1000);
 }
 
 restartButton.addEventListener("click", (event) => {
   restartButton.style.display = "none";
-  countNumber += 2;
   count.innerText = countNumber;
   countTime = "6";
   time.innerText = `00:${countTime}`;
@@ -99,8 +99,10 @@ restartButton.addEventListener("click", (event) => {
 
   //그림재배치
   putTargets();
-  startCountTimeout();
+  handleCountTimeout();
 });
+
+onClickTarget(targetContainer);
 
 function onClickTarget(targetEle) {
   targetEle.addEventListener("click", (event) => {
@@ -116,12 +118,10 @@ function onClickTarget(targetEle) {
         targetContainer.style.opacity = "0";
         clearMessage.innerHTML = "Clear!";
         restartButton.style.display = "block";
-        targetContainer.style.opacity = "0";
 
         const target = document.querySelectorAll(".target");
         //재시작하면 갯수를 점차 늘리기
-        countNumber = toBeAddedTargetNumber;
-        console.log(toBeAddedTargetNumber);
+        countNumber = toBeAddedTargetNumber + 2;
 
         for (let i = 0; i < target.length; i++) {
           targetContainer.removeChild(target[i]);
@@ -129,8 +129,9 @@ function onClickTarget(targetEle) {
       }
     }
     if (event.target.dataset.name === "mosquito") {
+      //시간멈춤
+      clearInterval(countTimeout);
       restartButton.style.display = "block";
-      targetContainer.style.opacity = "0";
       clearMessage.innerHTML = "Try again";
 
       const target = document.querySelectorAll(".target");
