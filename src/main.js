@@ -136,6 +136,8 @@ function onClickTarget(targetEle) {
 
       const target = document.querySelectorAll(".target");
 
+      countNumber = toBeAddedTargetNumber;
+
       for (let i = 0; i < target.length; i++) {
         targetContainer.removeChild(target[i]);
       }
