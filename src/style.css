@@ -1,0 +1,77 @@
+section {
+  width: 85%;
+  margin: auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+@media screen and (max-width: 450px) {
+  section {
+    width: 99%;
+  }
+}
+/* .clear {
+  display: none;
+} */
+.bg {
+  display: block;
+  width: 100%;
+  margin: auto;
+}
+.start__button,
+.restart__button,
+.clear__message,
+.time,
+.count {
+  position: absolute;
+}
+
+.start__button {
+  z-index: 11;
+  display: block;
+  top: 45%;
+  width: 100px;
+  height: 70px;
+  cursor: pointer;
+}
+.restart__button {
+  z-index: 12;
+
+  display: none;
+  top: 45%;
+  width: 100px;
+  height: 70px;
+  cursor: pointer;
+}
+.clear__message {
+  top: 30%;
+  color: rgb(43, 64, 226);
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.time {
+  top: 8%;
+}
+.count {
+  top: 20%;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.target__container {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+.watermelon {
+  position: absolute;
+  width: 10%;
+  z-index: 9;
+}
+.mosquito {
+  position: absolute;
+  top: 60%;
+  left: 30%;
+  width: 6%;
+  z-index: 10;
+}
