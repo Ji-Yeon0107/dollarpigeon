@@ -12,6 +12,9 @@ body {
   font-family: "Gloria Hallelujah", cursive;
   color: rgb(34, 34, 34);
 }
+.clear {
+  display: none;
+}
 .game {
   width: 800px;
   height: 500px;
@@ -48,8 +51,7 @@ body {
 
 /* game header */
 
-.game__sound,
-.game__muted {
+.game__sound {
   position: absolute;
   top: 0;
   right: 0;
@@ -61,10 +63,10 @@ body {
   background-color: transparent;
   z-index: 100;
 }
-.game__sound {
+.game__sound__on {
   display: block;
 }
-.game__muted {
+.game__muted__off {
   display: none;
 }
 .game__time {

@@ -5,16 +5,23 @@ const restartButton = document.querySelector(".game__restart-button");
 const resumeButton = document.querySelector(".game__resume-button");
 const time = document.querySelector(".game__timer");
 const count = document.querySelector(".game__count");
-const sound = document.querySelector(".game__sound");
-const muted = document.querySelector(".game__muted");
+const soundOn = document.querySelector(".game__sound__on");
+const soundOff = document.querySelector(".game__sound__off");
 const targetContainer = document.querySelector(".game__target-container");
 const clearMessage = document.querySelector(".game__message");
 const tutorial = document.querySelector(".game__tutorial");
+
+const mosquitoSound = new Audio("./sound/carrot_pull.mp3");
+const waterMelonSound = new Audio("./sound/bug_pull.mp3");
+const alertSound = new Audio("./sound/alert.wav");
+const winSound = new Audio("./sound/game_win.mp3");
+const bgSound = new Audio("./sound/bg.mp3");
 
 let TARGET_COUNT = 8;
 let LEFTTIME = 7;
 let TIMER;
 let RESULT;
+let SOUND = true;
 const initialTargetCount = TARGET_COUNT;
 const initialLeftTime = LEFTTIME;
 
@@ -29,9 +36,21 @@ function onLoad() {
   onClickTarget(targetContainer);
   pauseGame();
   resumeGame();
+  handleBgSound();
+}
+function playSound(sound) {
+  if (SOUND) {
+    sound.currentTime = 0;
+    sound.play();
+  }
+}
+function stopSound(sound) {
+  sound.pause();
 }
 function initGame(button, leftTime) {
   button.addEventListener("click", (event) => {
+    playSound(bgSound);
+
     if (button === startButton) {
       tutorial.innerText = "Hit mosquitoes!";
       tutorial.className = "game__tutorial move";
@@ -111,12 +130,12 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 function handleTimer(initialLeftTime, targetQuan) {
-  // const targetQuan = TARGET_COUNT;
   TIMER = setInterval(() => {
     LEFTTIME--;
     time.innerText = `00:0${LEFTTIME}`;
     if (LEFTTIME <= 3) {
       time.style.color = "red";
+      playSound(alertSound);
     }
     if (LEFTTIME === 0) {
       RESULT = "lose";
@@ -128,12 +147,14 @@ function handleTimer(initialLeftTime, targetQuan) {
 function pauseGame() {
   pauseButton.addEventListener("click", () => {
     clearInterval(TIMER);
+    stopSound(bgSound);
     resumeButton.style.display = "block";
     targetContainer.style.pointerEvents = "none";
   });
 }
 function resumeGame() {
   resumeButton.addEventListener("click", () => {
+    playSound(bgSound);
     targetContainer.style.pointerEvents = "auto";
     // handleTimerAfterResume();
     handleTimer(initialLeftTime, initialTargetCount);
@@ -167,14 +188,17 @@ function onClickTarget(target) {
     addClickEffect(target);
 
     if (event.target.dataset.name === "mosquito") {
+      playSound(mosquitoSound);
       event.target.style.display = "none";
       TARGET_COUNT--;
       if (TARGET_COUNT === 0) {
         RESULT = "win";
+        playSound(winSound);
         resetGame(RESULT, targetQuan);
       }
     }
     if (event.target.dataset.name === "watermelon") {
+      playSound(waterMelonSound);
       event.target.setAttribute("src", "./img/cracked.png");
       RESULT = "lose";
       resetGame(RESULT, targetQuan);
@@ -183,13 +207,17 @@ function onClickTarget(target) {
   });
 }
 
-// function handleBgSound() {
-//   sound.addEventListener("click", () => {
-//     sound.style.display = "none";
-//     muted.style.display = "block";
-//   });
-//   muted.addEventListener("click", () => {
-//     muted.style.display = "none";
-//     sound.style.display = "block";
-//   });
-// }
+function handleBgSound() {
+  soundOn.addEventListener("click", () => {
+    SOUND = false;
+    stopSound(bgSound);
+    soundOn.classList.toggle("clear");
+    soundOff.classList.toggle("clear");
+  });
+  soundOff.addEventListener("click", () => {
+    SOUND = true;
+    playSound(bgSound);
+    soundOn.classList.toggle("clear");
+    soundOff.classList.toggle("clear");
+  });
+}
