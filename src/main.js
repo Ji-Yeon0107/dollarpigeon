@@ -35,7 +35,7 @@ function onLoad() {
   initGame(restartButton, LEFTTIME);
   onClickTarget(targetContainer);
   pauseGame();
-  resumeGame();
+  // resumeGame();
   handleBgSound();
 }
 function playSound(sound) {
@@ -54,18 +54,21 @@ function initGame(button, leftTime) {
     if (button === startButton) {
       tutorial.innerText = "Hit mosquitoes!";
       tutorial.className = "game__tutorial move";
+      handleTimer(initialLeftTime, initialTargetCount);
+      resumeGame(initialTargetCount);
     }
     if (button === restartButton) {
       targetContainer.style.pointerEvents = "auto";
       time.style.color = "inherit";
       time.innerText = `00:0${leftTime}`;
       clearMessage.innerHTML = "";
+      handleTimer(initialLeftTime, TARGET_COUNT);
+      resumeGame(TARGET_COUNT);
     }
     button.style.display = "none";
     pauseButton.style.display = "block";
     count.innerText = TARGET_COUNT;
     addTargets();
-    handleTimer(initialLeftTime, initialTargetCount);
   });
 }
 function resetGame(result, targetQuan) {
@@ -152,12 +155,12 @@ function pauseGame() {
     targetContainer.style.pointerEvents = "none";
   });
 }
-function resumeGame() {
+function resumeGame(targetQuan) {
   resumeButton.addEventListener("click", () => {
     playSound(bgSound);
+    clearInterval(TIMER);
     targetContainer.style.pointerEvents = "auto";
-    // handleTimerAfterResume();
-    handleTimer(initialLeftTime, initialTargetCount);
+    handleTimer(initialLeftTime, targetQuan);
     resumeButton.style.display = "none";
   });
 }
@@ -182,20 +185,25 @@ function addClickEffect(target) {
 }
 function onClickTarget(target) {
   target.addEventListener("click", (event) => {
-    const orignialTarget = document.querySelectorAll(".target");
-    const targetQuan = orignialTarget.length / 2;
-
     addClickEffect(target);
+    finishGame(targetContainer);
 
     if (event.target.dataset.name === "mosquito") {
       playSound(mosquitoSound);
       event.target.style.display = "none";
       TARGET_COUNT--;
-      if (TARGET_COUNT === 0) {
-        RESULT = "win";
-        playSound(winSound);
-        resetGame(RESULT, targetQuan);
-      }
+    }
+    count.innerText = TARGET_COUNT;
+  });
+}
+function finishGame(target) {
+  const targetQuan = document.querySelectorAll(".target").length / 2;
+
+  target.addEventListener("click", (event) => {
+    if (TARGET_COUNT === 0) {
+      RESULT = "win";
+      playSound(winSound);
+      resetGame(RESULT, targetQuan);
     }
     if (event.target.dataset.name === "watermelon") {
       playSound(waterMelonSound);
@@ -203,7 +211,6 @@ function onClickTarget(target) {
       RESULT = "lose";
       resetGame(RESULT, targetQuan);
     }
-    count.innerText = TARGET_COUNT;
   });
 }
 
