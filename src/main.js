@@ -1,16 +1,14 @@
 "use strict";
 const section = document.querySelector(".game");
-const startButton = document.querySelector(".game__start-button");
-const pauseButton = document.querySelector(".game__pause");
-const restartButton = document.querySelector(".game__restart-button");
-const resumeButton = document.querySelector(".game__resume-button");
+const startButton = document.querySelector(".popup__start-button");
+const restartButton = document.querySelector(".popup__restart-button");
+const resumeButton = document.querySelector(".popup__resume-button");
 const time = document.querySelector(".game__timer");
 const count = document.querySelector(".game__count");
-const soundOn = document.querySelector(".game__sound__on");
-const soundOff = document.querySelector(".game__sound__off");
+const pauseButton = document.querySelector(".game__pause");
 const targetContainer = document.querySelector(".game__target-container");
-const clearMessage = document.querySelector(".game__message");
-const tutorial = document.querySelector(".game__tutorial");
+const clearMessage = document.querySelector(".popup__message");
+const tutorial = document.querySelector(".popup__tutorial");
 const mosquitoSound = new Audio("./sound/carrot_pull.mp3");
 const waterMelonSound = new Audio("./sound/bug_pull.mp3");
 const alertSound = new Audio("./sound/alert.wav");
@@ -52,7 +50,7 @@ function initGame(button, leftTime) {
 
     if (button === startButton) {
       tutorial.innerText = "Hit mosquitoes!";
-      tutorial.className = "game__tutorial move";
+      tutorial.className = "popup__tutorial move";
       handleTimer(initialLeftTime, initialTargetCount);
       resumeGame(initialTargetCount);
     }
@@ -210,16 +208,18 @@ function finishGame(target) {
   });
 }
 function handleBgSound() {
-  soundOn.addEventListener("click", () => {
-    SOUND = false;
-    stopSound(bgSound);
-    soundOn.classList.toggle("clear");
-    soundOff.classList.toggle("clear");
-  });
-  soundOff.addEventListener("click", () => {
-    SOUND = true;
-    playSound(bgSound);
-    soundOn.classList.toggle("clear");
-    soundOff.classList.toggle("clear");
+  const gameBtnBox = document.querySelector(".game__button-box");
+  const gameBtns = document.querySelectorAll(".game__sound");
+  gameBtnBox.addEventListener("click", () => {
+    if (SOUND) {
+      SOUND = false;
+      stopSound(bgSound);
+    } else {
+      SOUND = true;
+      playSound(bgSound);
+    }
+    for (let i = 0; i < gameBtns.length; i++) {
+      gameBtns[i].classList.toggle("clear");
+    }
   });
 }

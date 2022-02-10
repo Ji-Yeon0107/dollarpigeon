@@ -1,3 +1,7 @@
+:root {
+  --game-height: 500px;
+  --game-half-height: calc(var(--game-height) / 2);
+}
 * {
   margin: 0;
   padding: 0;
@@ -11,16 +15,18 @@ body {
   cursor: url(../img/flyswatter.png) 30 30, auto;
   font-family: "Gloria Hallelujah", cursive;
   color: rgb(34, 34, 34);
+  display: flex;
+  justify-content: center;
 }
 .clear {
   display: none;
 }
 .game {
+  position: relative;
   width: 800px;
-  height: 500px;
+  height: var(--game-height);
   min-width: 640px;
   margin: auto;
-  position: relative;
   display: flex;
   flex-direction: column;
   background: url(../img/background.png) no-repeat;
@@ -33,22 +39,26 @@ body {
   display: flex;
   justify-content: center;
 }
-.game__field {
-  width: 100%;
-  height: 50%;
+
+.popup {
+  position: absolute;
+  top: var(--game-half-height);
+  width: 800px;
+  height: var(--game-half-height);
   display: flex;
   justify-content: center;
 }
-.game__start-button,
-.game__restart-button,
-.game__resume-button,
-.game__message,
-.game__tutorial,
+
+.popup__start-button,
+.popup__restart-button,
+.popup__resume-button,
+.popup__message,
+.popup__tutorial,
 .game__time,
 .game__count {
   position: absolute;
 }
-
+/* game */
 /* game header */
 
 .game__sound {
@@ -62,12 +72,6 @@ body {
   outline: none;
   background-color: transparent;
   z-index: 100;
-}
-.game__sound__on {
-  display: block;
-}
-.game__muted__off {
-  display: none;
 }
 .game__time {
   width: 180px;
@@ -93,11 +97,9 @@ body {
   outline: none;
   background-color: transparent;
 }
-
+/* game */
 /* game field */
-.game__tutorial {
-  font-size: 1.8rem;
-}
+
 #mosquito {
   position: relative;
   width: 50px;
@@ -116,62 +118,15 @@ body {
   }
 }
 @media screen and (max-width: 780px) {
-  .tutorial {
+  .popup__tutorial {
     font-size: 1.2rem;
   }
 }
-.move {
-  animation: move 500ms ease-in forwards;
-}
-@keyframes move {
-  from {
-    top: 53%;
-    left: 30%;
-  }
-  to {
-    top: 3%;
-    left: 3%;
-  }
-}
-.game__button {
-  padding: 20px;
-  top: 68%;
-  font-size: 26px;
-  border-radius: 15px;
-  outline: none;
-  border: 5px solid palevioletred;
-  transition: transform 300ms ease-in;
-}
-.game__button:hover {
-  transform: scale(1.1);
-}
-.game__button:active {
-  box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
-}
 
-.game__start-button {
-  z-index: 12;
-  display: block;
-}
-.game__restart-button {
-  z-index: 12;
-  display: none;
-}
-.game__resume-button {
-  z-index: 12;
-  display: none;
-}
-.game__message {
-  top: 50%;
-  color: rgb(43, 64, 226);
-  font-size: 2rem;
-  font-weight: bold;
-}
 .game__target-container {
   width: 100%;
   height: 100%;
 }
-
 .mosquito:hover {
   transform: scale(1.2);
 }
@@ -192,4 +147,55 @@ body {
   position: absolute;
   width: 60px;
   z-index: 20;
+}
+/* popup */
+.popup__tutorial {
+  font-size: 1.8rem;
+}
+.move {
+  animation: move 500ms ease-in forwards;
+}
+@keyframes move {
+  from {
+    top: 0;
+    left: 30%;
+  }
+  to {
+    top: -100%;
+
+    left: 3%;
+  }
+}
+.popup__button {
+  padding: 20px;
+  margin-top: 70px;
+  font-size: 26px;
+  border-radius: 15px;
+  outline: none;
+  border: 5px solid palevioletred;
+  transition: transform 300ms ease-in;
+}
+.popup__button:hover {
+  transform: scale(1.1);
+}
+.popup__button:active {
+  box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+}
+
+.popup__start-button {
+  z-index: 12;
+  display: block;
+}
+.popup__restart-button {
+  z-index: 12;
+  display: none;
+}
+.popup__resume-button {
+  z-index: 12;
+  display: none;
+}
+.popup__message {
+  color: rgb(43, 64, 226);
+  font-size: 2rem;
+  font-weight: bold;
 }

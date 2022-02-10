@@ -15,26 +15,28 @@
   <body>
     <section class="game">
       <div class="game__header">
-        <button class="game__sound game__sound__on">🔊</button>
-        <button class="game__sound game__sound__off clear">🔇</button>
+        <div class="game__button-box">
+          <button class="game__sound">🔊</button>
+          <button class="game__sound clear">🔇</button>
+        </div>
         <div class="game__time">
           <span>Time </span><span class="game__timer"></span>
         </div>
         <div class="game__count"></div>
         <button class="game__pause">⏸</button>
       </div>
-      <div class="game__field">
-        <div class="game__tutorial">
-          <span>Hit </span>sneaky mosquitoes
-          <img id="mosquito" src="./img/mosquito.png" alt="mosquito" />
-          <span>aside watermelons!</span>
-        </div>
-        <button class="game__button game__start-button">Start</button>
-        <button class="game__button game__restart-button">Retry</button>
-        <button class="game__button game__resume-button">Resume</button>
-        <div class="game__target-container"></div>
-        <div class="game__message"></div>
+      <div class="game__target-container"></div>
+    </section>
+    <section class="popup">
+      <div class="popup__tutorial">
+        <span>Hit </span>sneaky mosquitoes
+        <img id="mosquito" src="./img/mosquito.png" alt="mosquito" />
+        <span>aside watermelons!</span>
       </div>
+      <button class="popup__button popup__start-button">Start</button>
+      <button class="popup__button popup__restart-button">Retry</button>
+      <button class="popup__button popup__resume-button">Resume</button>
+      <div class="popup__message"></div>
     </section>
   </body>
 </html>
