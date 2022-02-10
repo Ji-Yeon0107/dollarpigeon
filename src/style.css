@@ -171,6 +171,13 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.mosquito:hover {
+  transform: scale(1.2);
+}
+.mosquito {
+  transition: transform 150ms;
+}
 .watermelon {
   position: absolute;
   width: 12%;

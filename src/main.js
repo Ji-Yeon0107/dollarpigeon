@@ -1,3 +1,4 @@
+"use strict";
 const section = document.querySelector(".game");
 const startButton = document.querySelector(".game__start-button");
 const pauseButton = document.querySelector(".game__pause");
@@ -10,7 +11,6 @@ const soundOff = document.querySelector(".game__sound__off");
 const targetContainer = document.querySelector(".game__target-container");
 const clearMessage = document.querySelector(".game__message");
 const tutorial = document.querySelector(".game__tutorial");
-
 const mosquitoSound = new Audio("./sound/carrot_pull.mp3");
 const waterMelonSound = new Audio("./sound/bug_pull.mp3");
 const alertSound = new Audio("./sound/alert.wav");
@@ -30,7 +30,6 @@ onLoad();
 function onLoad() {
   count.innerText = TARGET_COUNT;
   time.innerText = `00:0${LEFTTIME}`;
-
   initGame(startButton);
   initGame(restartButton, LEFTTIME);
   onClickTarget(targetContainer);
@@ -75,15 +74,12 @@ function resetGame(result, targetQuan) {
   clearInterval(TIMER);
   targetContainer.style.pointerEvents = "none";
   pauseButton.style.display = "none";
-
   const resetTerm = setTimeout(() => {
     const target = document.querySelectorAll(".target");
     restartButton.style.display = "block";
-
     for (let i = 0; i < target.length; i++) {
       targetContainer.removeChild(target[i]);
     }
-
     if (result === "win") {
       clearMessage.innerHTML = "Clear!";
       TARGET_COUNT = targetQuan + 2;
@@ -213,7 +209,6 @@ function finishGame(target) {
     }
   });
 }
-
 function handleBgSound() {
   soundOn.addEventListener("click", () => {
     SOUND = false;
