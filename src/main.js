@@ -9,14 +9,15 @@ const pauseButton = document.querySelector(".game__pause");
 const targetContainer = document.querySelector(".game__target-container");
 const clearMessage = document.querySelector(".popup__message");
 const tutorial = document.querySelector(".popup__tutorial");
-const mosquitoSound = new Audio("./sound/carrot_pull.mp3");
-const waterMelonSound = new Audio("./sound/bug_pull.mp3");
+const dollarSound = new Audio("./sound/carrot_pull.mp3");
+const pigeonSound = new Audio("./sound/bug_pull.mp3");
 const alertSound = new Audio("./sound/alert.wav");
 const winSound = new Audio("./sound/game_win.mp3");
 const bgSound = new Audio("./sound/bg.mp3");
 
+let INIT = false;
 let TARGET_COUNT = 8;
-let LEFTTIME = 7;
+let LEFTTIME = 9;
 let TIMER;
 let RESULT;
 let SOUND = true;
@@ -32,7 +33,6 @@ function onLoad() {
   initGame(restartButton, LEFTTIME);
   onClickTarget(targetContainer);
   pauseGame();
-  // resumeGame();
   handleBgSound();
 }
 function playSound(sound) {
@@ -49,7 +49,8 @@ function initGame(button, leftTime) {
     playSound(bgSound);
 
     if (button === startButton) {
-      tutorial.innerText = "Hit mosquitoes!";
+      INIT = true;
+      tutorial.innerText = "Pick up money!";
       tutorial.className = "popup__tutorial move";
       handleTimer(initialLeftTime, initialTargetCount);
       resumeGame(initialTargetCount);
@@ -86,40 +87,47 @@ function resetGame(result, targetQuan) {
       clearMessage.innerHTML = "Try again";
       TARGET_COUNT = targetQuan;
     }
-  }, 400);
+  }, 800);
 
   LEFTTIME = initialLeftTime;
 }
 function addTargets() {
   for (let i = 0; i < TARGET_COUNT; i++) {
-    const newWatermelon = document.createElement("img");
-    newWatermelon.setAttribute("class", "watermelon target");
-    newWatermelon.setAttribute("data-name", "watermelon");
-    newWatermelon.setAttribute("src", "./img/watermelon.png");
-    newWatermelon.setAttribute("alt", "watermelon");
-    targetContainer.appendChild(newWatermelon);
+    const newPigeon = document.createElement("img");
+    newPigeon.setAttribute("class", "pigeon target");
+    newPigeon.setAttribute("data-name", "pigeon");
+    newPigeon.setAttribute("src", "./img/pigeon.png");
+    newPigeon.setAttribute("alt", "pigeon");
+    targetContainer.appendChild(newPigeon);
 
-    const newMosquito = document.createElement("img");
-    newMosquito.setAttribute("class", "mosquito target");
-    newMosquito.setAttribute("data-name", "mosquito");
-    newMosquito.setAttribute("src", "./img/mosquito.png");
-    newMosquito.setAttribute("alt", "mosquito");
-    targetContainer.appendChild(newMosquito);
+    const newDollar = document.createElement("img");
+    newDollar.setAttribute("class", "dollar target");
+    newDollar.setAttribute("data-name", "dollar");
+    newDollar.setAttribute("src", "./img/dollar.png");
+    newDollar.setAttribute("alt", "dollar");
+    targetContainer.appendChild(newDollar);
 
-    putTargets(newWatermelon, newMosquito);
+    putTargets(newPigeon, newDollar);
   }
 }
 function putTargets(targetA, targetB) {
   for (let i = 0; i < TARGET_COUNT; i++) {
-    const randomYa = getRandomNumber(257, 400);
-    const randomXa = getRandomNumber(90, 713);
-    const randomYb = getRandomNumber(257, 400);
+    const randomYa = getRandomNumber(300, 350);
+    const randomXa = getRandomNumber(90, 650);
+    const randomYb = getRandomNumber(310, 360);
     const randomXb = getRandomNumber(90, 713);
     targetA.style.top = `${randomYa}px`;
     targetA.style.left = `${randomXa}px`;
     targetB.style.top = `${randomYb}px`;
     targetB.style.left = `${randomXb}px`;
+
+    moveTargets(targetA, targetB);
   }
+}
+function moveTargets(targetA, targetB) {
+  setInterval(() => {
+    targetB.style.animation = "move2 1600ms forwards infinite";
+  }, 0);
 }
 function getRandomNumber(min, max) {
   min = Math.ceil(min);
@@ -182,8 +190,8 @@ function onClickTarget(target) {
     addClickEffect(target);
     finishGame(targetContainer);
 
-    if (event.target.dataset.name === "mosquito") {
-      playSound(mosquitoSound);
+    if (event.target.dataset.name === "dollar") {
+      playSound(dollarSound);
       event.target.style.display = "none";
       TARGET_COUNT--;
     }
@@ -199,9 +207,11 @@ function finishGame(target) {
       playSound(winSound);
       resetGame(RESULT, targetQuan);
     }
-    if (event.target.dataset.name === "watermelon") {
-      playSound(waterMelonSound);
-      event.target.setAttribute("src", "./img/cracked.png");
+    if (event.target.dataset.name === "pigeon") {
+      playSound(pigeonSound);
+      event.target.setAttribute("src", "./img/pigeon_flying.png");
+      event.target.style.animation = "fly 100ms forwards";
+      event.target.style.zIndex = "10000";
       RESULT = "lose";
       resetGame(RESULT, targetQuan);
     }
@@ -211,12 +221,14 @@ function handleBgSound() {
   const gameBtnBox = document.querySelector(".game__button-box");
   const gameBtns = document.querySelectorAll(".game__sound");
   gameBtnBox.addEventListener("click", () => {
-    if (SOUND) {
-      SOUND = false;
-      stopSound(bgSound);
-    } else {
-      SOUND = true;
-      playSound(bgSound);
+    if (INIT) {
+      if (SOUND) {
+        SOUND = false;
+        stopSound(bgSound);
+      } else {
+        SOUND = true;
+        playSound(bgSound);
+      }
     }
     for (let i = 0; i < gameBtns.length; i++) {
       gameBtns[i].classList.toggle("clear");

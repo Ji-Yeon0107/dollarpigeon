@@ -8,9 +8,13 @@
       href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    />
     <link rel="stylesheet" href="src/style.css" />
     <script src="src/main.js" defer></script>
-    <title>모기를 잡아라!</title>
+    <title>돈을 주워라!</title>
   </head>
   <body>
     <section class="game">
@@ -23,15 +27,17 @@
           <span>Time </span><span class="game__timer"></span>
         </div>
         <div class="game__count"></div>
-        <button class="game__pause">⏸</button>
+        <button class="game__pause">
+          <i class="fa-solid fa-circle-pause"></i>
+        </button>
       </div>
       <div class="game__target-container"></div>
     </section>
     <section class="popup">
       <div class="popup__tutorial">
-        <span>Hit </span>sneaky mosquitoes
-        <img id="mosquito" src="./img/mosquito.png" alt="mosquito" />
-        <span>aside watermelons!</span>
+        <span>Pick up </span>dollar bill
+        <img id="dollar" src="./img/dollar.png" alt="dollar" />
+        <span>aside pigeons!!</span>
       </div>
       <button class="popup__button popup__start-button">Start</button>
       <button class="popup__button popup__restart-button">Retry</button>
