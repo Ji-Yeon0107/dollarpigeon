@@ -8,9 +8,6 @@
   box-sizing: border-box;
   color: rgb(34, 34, 34);
 }
-button {
-  cursor: pointer;
-}
 body {
   cursor: pointer;
   font-family: "Gloria Hallelujah", cursive;
