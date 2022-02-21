@@ -7,9 +7,9 @@
   padding: 0;
   box-sizing: border-box;
   color: rgb(34, 34, 34);
+  cursor: pointer;
 }
 body {
-  cursor: pointer;
   font-family: "Gloria Hallelujah", cursive;
   color: rgb(34, 34, 34);
   display: flex;
@@ -128,7 +128,7 @@ body {
 }
 .pigeon {
   position: absolute;
-  width: 11%;
+  width: 10%;
   z-index: 10;
 }
 .dollar {
